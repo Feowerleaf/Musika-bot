@@ -1,0 +1,23 @@
+{
+  "name": "musika-bot",
+  "version": "0.10.0",
+  "description": "Music player in Discord voice channel",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feowerleaf/Musika-bot.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Feowerleaf/Musika-bot/issues"
+  },
+  "homepage": "https://github.com/Feowerleaf/Musika-bot#readme",
+  "dependencies": {
+    "eris": "^0.17.2",
+    "shoukaku": "^4.0.1",
+    "yaml": "^2.3.4"
+  }
+}

@@ -1,0 +1,58 @@
+---
+# Set this to true if you use Musika for your bot only.
+# If your bot has other slash commands, set this to false.
+# However, when Musika removes a command, you will need to remove it manually
+register_musika_commands_only: true
+
+# Discord bot's token
+token: ''
+
+# Bot admins' User IDs
+permitted_personnel: []
+# Or use array below
+# permitted_personnel:
+# - 'User ID'
+# - 'User ID'
+
+# Register /reload in the following guilds
+# /reload is limited in admins' guilds
+reload_in_guild: []
+# Or use array below
+# reload_in_guild:
+# - 'Guild ID'
+# - 'Guild ID'
+
+# Lavalink server nodes
+# For free and public Lavalink server, check
+# https://lavalink.darrennathanael.com/#tunnelbroker-guide
+
+# You can also host one
+# Check https://github.com/lavalink-devs/Lavalink
+
+# Musika only works with Lavalink server of version 4.0.0
+nodes:
+- name: Lorem
+  url: #0.0.0.0:2345
+  auth: youshallnotpass
+  
+# Enable for shoukaku debug and its messages
+shoukaku_debug: false
+
+# Bot's activity status when idle
+# Refer to https://github.com/lavalink-devs/Lavalink
+status:
+- name: Musika
+  type: 4
+  emoji:
+    name: ":notes:"
+  state: "\U0001F3BC Ready for music party!"
+#- name:
+#  type:
+#  state:
+
+# Leave voice channel after staying in voice channel alone for (in millisecond)
+# Useful to avoid bot leaving immediately due to unstable connection of user
+no_listener_millisec: 10000
+
+# Leave voice channel after idling for (in millisecond)
+idle_timeout_millisec: 300000
