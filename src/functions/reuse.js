@@ -1,8 +1,9 @@
 const fs = require("fs")
 module.exports = {
     is_DJ: async (interaction) => {
-        if (!fs.existsSync(`./data/guild/Guild_${interaction.guildID}.json`) || (fs.readFileSync(`./data/guild/Guild_${interaction.guildID}.json`)).DJ?.length < 1) return false
+        if (!fs.existsSync(`./data/guild/Guild_${interaction.guildID}.json`) || !(fs.readFileSync(`./data/guild/Guild_${interaction.guildID}.json`)).DJ) return false
         let guildJSON = JSON.parse(fs.readFileSync(`./data/guild/Guild_${interaction.guildID}.json`))
+        if (guildJSON.DJ.length < 1 ) return false
         for (n = 0; n < guildJSON.DJ.length; n++) {
             if (interaction.member.roles.includes(guildJSON.DJ[n])) return true;
         };

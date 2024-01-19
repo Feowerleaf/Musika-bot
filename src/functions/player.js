@@ -80,7 +80,8 @@ module.exports = {
                 player.on("error", async (err) => console.log(err))
                 player.queue = []
                 if (fs.existsSync(`./data/guild/Guild_${i.guildID}.json`)) {
-                    player.loop_mode = fs.readFileSync(`./data/guild/Guild_${i.guildID}.json`).loop_mode
+                    console.log("abc")
+                    player.loop_mode = JSON.parse(fs.readFileSync(`./data/guild/Guild_${i.guildID}.json`)).loop_mode || "none"
                 } else player.loop_mode = "none"
                 return player
             }
