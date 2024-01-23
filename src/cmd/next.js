@@ -34,8 +34,8 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
                     return
                 }
             }
-            msgobj.embed.description = "Playing next track now..."
-            if (player.queue.length == 0) msgobj.embed.description += "\nBut where is the next track?"
+            msgobj.embed.title = `Skipped ${player.playing.info.title}`
+            if (player.queue.length == 0) msgobj.embed.description += "Playing next track now...\nBut where is the next track?"
             player.playing.end_msg.embed.title = "Skipped..."
             await player.stopTrack().then(async () => {
                 return interaction.createMessage(msgobj)

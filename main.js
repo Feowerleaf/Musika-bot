@@ -9,7 +9,7 @@ let g = require('./src/functions/reuse')
 let configurations = yaml.parse(fs.readFileSync("./config.yml", "utf-8"));
 const TOKEN = configurations.token;
 const rmco = configurations.register_musika_commands_only
-const version = "Musika 𐤀 Build 10 - ջ Version under testing"
+const version = "Musika 𐤀 Build 11 - ջ Version under testing"
 let the_bot_itself = {}
 
 //Data
@@ -116,7 +116,7 @@ async function loadcmds(interaction) {
                 if (rmco) {
                     await bulk();
                     console.log("\nBulk edit of commands has done.\nThis method removes commands other than Musika's.")
-                    console.log("If you wish to change this behaviour, please change it in 'config.json' file.")
+                    console.log("If you wish to change this behaviour, please change it in 'config.yml' file.")
                 }
                 else {await nonbulk(); console.log("\nAll commands have been registered.")}
                 console.log(commandIDobj);

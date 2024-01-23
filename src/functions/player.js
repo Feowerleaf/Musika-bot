@@ -225,7 +225,7 @@ module.exports = {
             let m = results.data[k].info
             m.length_r = m.isStream? "Unpredictable duration as it is a live":g.readable_duration(m.length)
             msgobj.embed.description = `${msgobj.embed.description}${k+1}. [${m.title}](${m.uri}) - by ${m.author} (${m.length_r})\n`
-            selections_components.push({"type": 2, "style": 1, "label": k+1, "custom_id": `queue add selection ${k+1}`})
+            selections_components.push({"type": 2, "style": 1, "label": k+1, "custom_id": `play selection ${k+1}`})
         }
         inner.get("searchresults").set(i.id, results.data.slice(0, r))
         msgobj.components.unshift({"type": 1, 
