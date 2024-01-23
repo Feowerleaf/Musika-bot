@@ -48,7 +48,7 @@ module.exports = {
                 player.on("exception", async () => {
                     if (player.playing) {
                         player.playing.end_msg.embed.title = "Exception event occurred while playing"
-                        player.playing.end_msg.embed.description = "The service failed to play the track. It has been stopped and skipped.\n\n" + exc_msg.embed.description
+                        player.playing.end_msg.embed.description = "The service failed to play the track. It has been stopped and skipped.\n\n" + player.playing.end_msg.embed.description
                         await bot.editMessage(player.playing.channel, player.playing.play_msgid, player.playing.end_msg).catch(e => console.log(e))
                         player.playing.bad_loop == null ? player.playing.bad_loop = 1 : player.playing.bad_loop++
                     }
