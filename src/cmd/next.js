@@ -19,15 +19,22 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
         if (shoukaku.players.has(interaction.guildID)){
             let player = shoukaku.players.get(interaction.guildID)
             let DJ = await g.is_DJ(interaction)
-            if (player.playing.requestor != interaction.member.id) {
-                if (!DJ) {
+            if (player.playing.requestor == interaction.member.id) { 
+                msgobj.embed.footer.text = `Track requestor skipped it...\n${msgobj.embed.footer.text}`
+            } else if (DJ) {
+                msgobj.embed.footer.text = `Track is skipped by DJ...\n${msgobj.embed.footer.text}`
+            }
+            else {
+                let voiceChannel = bot.getChannel(shoukaku.connections.get(interaction.guildID).channelId)
+                if (voiceChannel.voiceMembers.size == 2 && voiceChannel.voiceMembers.has(interaction.member.id)) {
+                    msgobj.embed.footer.text = `Skipped as you wish, the lonely listener...\n${msgobj.embed.footer.text}`
+                } else {
                     msgobj.embed.description = `"${player.playing.info.title}" was not requested by you, and you cannot skip it.`
-                    await interaction.createFollowup(msgobj)
+                    await interaction.createMessage(msgobj)
                     return
                 }
             }
             msgobj.embed.description = "Playing next track now..."
-            if (DJ) msgobj.embed.footer = `Track is skipped by DJ...\n${msgobj.embed.footer}`
             if (player.queue.length == 0) msgobj.embed.description += "\nBut where is the next track?"
             player.playing.end_msg.embed.title = "Skipped..."
             await player.stopTrack().then(async () => {

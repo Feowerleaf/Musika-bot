@@ -1,6 +1,6 @@
 {
   "name": "musika-bot",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Music player in Discord voice channel",
   "main": "main.js",
   "scripts": {
