@@ -146,13 +146,12 @@ exports.button = async (bot, interaction, inner, shoukaku) => {
             }
         } else if (interaction.data.custom_id.startsWith("queue add playlist")) {
             let selection = interaction.data.custom_id.slice(19).trimEnd()
-            let searchmessage = inner.get("searchresults").get(interaction.message.interaction.id)
-            if (searchmessage == undefined) {
+            let savedresult = inner.get("searchresults").get(interaction.message.interaction.id)
+            if (savedresult == undefined) {
                 msgobj.flags = 64; msgobj.components = []
                 msgobj.embed.description = "Sorry, please search and select again."
                 return await interaction.createFollowup(msgobj)
             }
-            let savedresult = searchmessage.results
             if (selection == "all") {
                 savedresult.data.info.selectedTrack = 0
             }

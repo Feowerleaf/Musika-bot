@@ -80,7 +80,6 @@ module.exports = {
                 player.on("error", async (err) => console.log(err))
                 player.queue = []
                 if (fs.existsSync(`./data/guild/Guild_${i.guildID}.json`)) {
-                    console.log("abc")
                     player.loop_mode = JSON.parse(fs.readFileSync(`./data/guild/Guild_${i.guildID}.json`)).loop_mode || "none"
                 } else player.loop_mode = "none"
                 return player
@@ -149,7 +148,7 @@ module.exports = {
             return;
         }
         try {
-            player.emptied_queue_timeout = clearTimeout(player.emptied_queue_timeout)
+            if (player.emptied_queue_timeout) { clearTimeout(player.emptied_queue_timeout); player.emptied_queue_timeout = null }
             if (!player.loop_mode == "current track" || !player.playing) {
                 player.playing = player.queue.shift();
                 player.musika_lastchannel = player.playing.channel
