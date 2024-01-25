@@ -39,7 +39,7 @@ nodes:
 shoukaku_debug: false
 
 # Bot's activity status when idle
-# Refer to https://github.com/lavalink-devs/Lavalink
+# Refer to https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-structure
 status:
 - name: Musika
   type: 4
