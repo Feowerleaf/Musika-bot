@@ -9,7 +9,7 @@ let g = require('./src/functions/reuse')
 let configurations = yaml.parse(fs.readFileSync("./config.yml", "utf-8"));
 const TOKEN = configurations.token;
 const rmco = configurations.register_musika_commands_only
-const version = "Musika 𐤀 Build 11 - ջ Version under testing"
+const version = "Musika 𐤀 Build 12 - ջ Version under testing"
 let the_bot_itself = {}
 
 //Data
