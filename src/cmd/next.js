@@ -21,7 +21,7 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
             let DJ = await g.is_DJ(interaction)
             if (player.playing.requestor == interaction.member.id) { 
                 msgobj.embed.footer.text = `Track requestor skipped it...\n${msgobj.embed.footer.text}`
-            } else if (DJ) {
+            } else if (DJ || interaction.member.permissions.has("manageGuild")) {
                 msgobj.embed.footer.text = `Track is skipped by DJ...\n${msgobj.embed.footer.text}`
             }
             else {
@@ -35,7 +35,7 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
                 }
             }
             msgobj.embed.title = `Skipped ${player.playing.info.title}`
-            if (player.queue.length == 0) msgobj.embed.description += "Playing next track now...\nBut where is the next track?"
+            if (player.queue.length == 0) msgobj.embed.description = "Playing next track now...\nBut where is the next track?"
             player.playing.end_msg.embed.title = "Skipped..."
             await player.stopTrack().then(async () => {
                 return interaction.createMessage(msgobj)

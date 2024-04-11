@@ -20,8 +20,8 @@ exports.create = {
         {
             "name": "query",
             "name_localizations": {"zh-TW": "曲名_網址"},
-            "description": "Add tracks to the queue.",
-            "description_localizations": {"zh-TW": "加東西下去等待播放"},
+            "description": "Add tracks to the queue Accept links and song titles.",
+            "description_localizations": {"zh-TW": "加東西下去等待播放。可以是網址或丈是曲名。"},
             "type": 1,
             "options": [
                 {
@@ -31,6 +31,30 @@ exports.create = {
                     "description_localization": {"zh-TW": "歌名或者網址"},
                     "type": 3,
                     "required": true
+                },
+                {
+                    "name": "hour",
+                    "name_localizations": {"zh-TW": "時"},
+                    "description": "Hour value of time to seek to",
+                    "description_localization": {"zh-TW": "跳去播放時間的時"},
+                    "type": 4,
+                    "required": false
+                },
+                {
+                    "name": "minute",
+                    "name_localizations": {"zh-TW": "分"},
+                    "description": "Minute value of time to seek to",
+                    "description_localization": {"zh-TW": "跳去播放時間的分"},
+                    "type": 4,
+                    "required": false
+                },
+                {
+                    "name": "second",
+                    "name_localizations": {"zh-TW": "秒"},
+                    "description": "Second value of time to seek to",
+                    "description_localization": {"zh-TW": "跳去播放時間的秒"},
+                    "type": 4,
+                    "required": false
                 }
             ]
         },
@@ -157,15 +181,29 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
     let msgobj = g.msgobj(inner, 0)
     if (interaction.data.options[0].name == "query") {
         try {
+            let data_opt_obj = {}
+            interaction.data.options[0].options.forEach(element => {
+                data_opt_obj[element.name] = element
+            });
             await interaction.acknowledge()
             let results = typeof Object
-            if (g.add_http(interaction.data.options[0].options[0].value) == "") {
-                results = await f.search(searchNode, "ytsearch", interaction.data.options[0].options[0].value).catch(e =>{
+            let seekto = 0
+            if (g.add_http(data_opt_obj.query.value) == "") {
+                results = await f.search(searchNode, "ytsearch", data_opt_obj.query.value).catch(e =>{
                     console.log(e)
                     msgobj.embed.description = "Cannot connect to Lavalink server."
                 })
             } else {
-                results = await searchNode.rest.resolve(`${interaction.data.options[0].options[0].value}`).catch(e => {
+                if (data_opt_obj.query.value.includes("youtube.com") || data_opt_obj.query.value.includes("youtu.be")) {
+                    let timesplitarr = data_opt_obj.query.value.split("?t=")
+                    if (timesplitarr.length > 1) {
+                        timesplitarr = timesplitarr[1].split(/[^0-9]/)
+                        if (!isNaN(timesplitarr[0])) {
+                            seekto = timesplitarr[0]*1000
+                        }
+                    }
+                }
+                results = await searchNode.rest.resolve(`${data_opt_obj.query.value}`).catch(e => {
                     console.log(e)
                     msgobj.embed.description = "Cannot connect to Lavalink server."
                     return interaction.createMessage(msgobj);
@@ -227,6 +265,13 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
                 track.requestor = interaction.member.id
                 track.channel = interaction.channel.id
                 track.info.length_r = track.info.isStream? "Unpredictable duration as it is a live":g.readable_duration(track.info.length)
+                if ((data_opt_obj.hour || data_opt_obj.minute) || data_opt_obj.second) {
+                    const hour = data_opt_obj.hour? data_opt_obj.hour.value:0
+                    const min = data_opt_obj.minute? data_opt_obj.minute.value:0
+                    const sec = data_opt_obj.second? data_opt_obj.second.value:0
+                    seekto = g.duration(hour, min, sec)
+                }
+                track.seekto = seekto < track.info.length? seekto : 0
                 if (inner.get("innerqueue").has(interaction.guildID)) {
                     track.iAID = interaction.applicationID
                     track.iToken = interaction.token

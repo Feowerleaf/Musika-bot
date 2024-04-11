@@ -1,5 +1,8 @@
 const fs = require("fs")
 module.exports = {
+    duration: (hour, min, sec) => {
+        return hour*60*60*1000+min*60*1000+sec*1000
+    },
     is_DJ: async (interaction) => {
         if (!fs.existsSync(`./data/guild/Guild_${interaction.guildID}.json`) || !(fs.readFileSync(`./data/guild/Guild_${interaction.guildID}.json`)).DJ) return false
         let guildJSON = JSON.parse(fs.readFileSync(`./data/guild/Guild_${interaction.guildID}.json`))

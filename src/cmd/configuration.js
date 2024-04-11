@@ -31,7 +31,7 @@ exports.run = async (bot, interaction, inner, shoukaku, searchNode) => {
             if (DJ) {
                 msgobj.embed.title = "Configuration value of the bot in this guild"
                 msgobj.embed.description = "To limit certain roles from using some commands, or only allow command usage in certain channels, please set it in guild settings."
-                msgobj.embed.description += "\n\nDJ roles are useful when more than 1 person are listening in, and people can use commands such as /next when staying alone."
+                msgobj.embed.description += "\n\nDJ roles will grant people without manage server permission to override the other while playing music."
                 msgobj.embed.fields = []; msgobj.embed.fields[0] = {"name": "Role recognized as DJ", "value": ""}
                 for (n = 0; n < guildJSON.DJ.length; n++) {
                     msgobj.embed.fields[0].value += `<@&${guildJSON.DJ[n]}> `

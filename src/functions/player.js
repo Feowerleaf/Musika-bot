@@ -154,7 +154,7 @@ module.exports = {
                 player.musika_lastchannel = player.playing.channel
             }
             let msgobj = g.msgobj(inner, 64)
-            msgobj.embed.description = `[${player.playing.info.title}](${player.playing.info.uri})\nDuration: ${player.playing.info.length_r}`
+            msgobj.embed.description = `[${player.playing.info.title}](${player.playing.info.uri})\nDuration: ${player.playing.info.length_r}\nStart playing from: ${g.readable_duration(player.playing.seekto)}`
             player.playing.end_msg = JSON.parse(JSON.stringify(msgobj))
             player.playing.end_msg.embed.title = "Finished playing"
             if (player.loop_mode == "current track") msgobj.embed.title = "Looping"
@@ -167,7 +167,9 @@ module.exports = {
                     console.log(e)            
                 })
             }
-            await player.playTrack({track: player.playing.encoded}).then(async ()=> {
+            await player.playTrack({track: player.playing.encoded,
+                                    options: {startTime: player.playing.seekto}})
+                                    .then(async ()=> {
                 if (shoukaku.players.size == 1) {
                     bot.editStatus("online", [{
                         name: `${player.playing.info.title}`, type: 2
